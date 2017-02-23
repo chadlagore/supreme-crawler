@@ -1,11 +1,11 @@
 from difflib import SequenceMatcher
 import os
 import requests
+import sys
 import time
 from time import gmtime, strftime
 
 url = 'http://www.supremenewyork.com/shop'
-time_sleep = 90 # Seconds
 thresh = 0.9 # Similarity
 
 def similar(a, b):
@@ -20,7 +20,7 @@ def get_cache():
     return requests.get(url).text
 
 
-def wait_for_diff(cached):
+def wait_for_diff(cached, time_sleep):
     diff = 1
 
     while diff > thresh:
@@ -52,8 +52,19 @@ def finished():
 
 def main():
     print("Starting... ")
+
+    time_sleep = 90 # Seconds
+
+    if len(sys.argv) > 1:
+        time_sleep = int(sys.argv[1])
+
+    print(
+        "Checking {} every {} seconds, control-c to kill.".format(
+            url, time_sleep)
+    )
+
     cached = get_cache()
-    wait_for_diff(cached)
+    wait_for_diff(cached, time_sleep)
     finished()
 
 
