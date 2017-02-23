@@ -51,6 +51,7 @@ def finished():
 
 
 def main():
+    print("Starting... ")
     cached = get_cache()
     wait_for_diff(cached)
     finished()
