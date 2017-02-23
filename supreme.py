@@ -6,7 +6,7 @@ import time
 from time import gmtime, strftime
 
 url = 'http://www.supremenewyork.com/shop'
-thresh = 0.9 # Similarity
+thresh = 0.99 # Similarity
 
 def similar(a, b):
     return SequenceMatcher(None, a, b).ratio()
@@ -66,6 +66,7 @@ def main():
     cached = get_cache()
     wait_for_diff(cached, time_sleep)
     finished()
+    os.system('Rscript texter.R {}'.format(thresh))
 
 
 if __name__ == '__main__':
